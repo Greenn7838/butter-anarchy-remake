@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.3",
+    "mineflayer": "^4.6.0"
+  },
+  "name": "butter-anarchy-remake",
+  "version": "1.0.0",
+  "description": "Discord - AnarchyVN Butter Bot",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Greenn7838/butter-anarchy-remake.git"
+  },
+  "keywords": [
+    "anarchyvn"
+  ],
+  "author": "Butter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Greenn7838/butter-anarchy-remake/issues"
+  },
+  "homepage": "https://github.com/Greenn7838/butter-anarchy-remake#readme"
+}
