@@ -16,4 +16,7 @@ client.categories = fs.readdirSync('./commands');
 
 ['command', 'event'].forEach(handler => require(`./handlers/${handler}`)(client));
 
+const createBot = require('./minebot');
+createBot(client);
+
 client.login(process.env.DISCORD_TOKEN);
