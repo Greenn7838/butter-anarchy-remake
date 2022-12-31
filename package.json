@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "ascii-table": "^0.0.9",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.3",
+    "minecraft-server-util": "^5.3.1",
     "mineflayer": "^4.6.0",
     "mineflayer-tps": "^1.0.1"
   },

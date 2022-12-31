@@ -48,14 +48,15 @@ async function createBot(client) {
     });
 
     bot.on('message', async(msg) => {
-        const embed = new Discord.MessageEmbed().setColor('AQUA').setDescription(msg.toString());
-        const channel = client.channels.cache.get(process.env.DISCORD_LIVECHAT);
-            channel.send({ embeds: [embed] });
+        const embed = new Discord.MessageEmbed();
+        await embedColor(embed, msg, client)
+        client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
     });
 
     bot.on('end', (reason) => { console.log(reason) }); // bao cao ly do bot k chay
 
     presence(bot, client) // set presence
+
 }
 
 /**
@@ -69,7 +70,26 @@ async function presence(bot, client) {
         const players = bot.players ? Object.values(bot.players).length : 1;
         const ping = bot.player ? bot.player.ping : 0;
         client.user.setActivity({ name: `TPS: ${tps} | Players: ${players} | Ping: ${ping}ms`, type: 'WATCHING' });    
-    }, 5 * 1000)
-}
+    }, 5 * 1000);
+};
+
+/**
+ * 
+ * @param {Discord.MessageEmbed} embed 
+ * @param {String[]} msg 
+ * @param {Discord.Client} client 
+ */
+
+function embedColor(embed, msg, client) {
+    const deathprefix = '[ANARCHYVN]';
+    const donatorprefix = '<[Donator]';
+    if (msg.toString().startsWith(deathprefix)) {
+        embed.setColor('DARK_RED').setTitle(msg.toString());
+    } else if (msg.toString().startsWith(donatorprefix)) {
+        embed.setColor('GOLD').setDescription(msg.toString());
+    } else {
+        embed.setColor('BLUE').setDescription(msg.toString());
+    };
+};
 
 module.exports = createBot
