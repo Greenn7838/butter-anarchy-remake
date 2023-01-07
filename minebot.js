@@ -2,6 +2,7 @@ require('dotenv').config();
 const mineflayer = require('mineflayer');
 const tpsPlugin = require('mineflayer-tps')(mineflayer);
 const Discord = require('discord.js');
+const emojis = require('./emojis.json');
 
 // main function
 /**
@@ -60,7 +61,7 @@ async function createBot(client) {
     client.on('messageCreate', (msg) => {
         if (msg.author.bot) return;
         if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
-        msg.react('<a:Checkverify:1061192684146008144>');
+        msg.react(emojis.check);
         bot.chat(`> ${msg.toString()} [${stringGen(4)}]`);
     })
 
@@ -91,11 +92,18 @@ function embedColor(embed, msg, client) {
     const deathprefix = '[ANARCHYVN]';
     const donatorprefix = '<[Donator]';
     if (msg.toString().startsWith(deathprefix)) {
-        embed.setColor('DARK_RED').setTitle(msg.toString());
+        embed.setColor('DARK_RED').setDescription(`${emojis.death} ${msg.toString()}`); // death event
     } else if (msg.toString().startsWith(donatorprefix)) {
-        embed.setColor('GOLD').setDescription(msg.toString());
+        embed.setColor('GOLD').setDescription(`${emojis.donator} ${msg.toString()}`); // donators' chat
     } else {
-        embed.setColor('BLUE').setDescription(msg.toString());
+        embed.setColor('BLUE').setDescription(msg.toString()); // normal chat
+    };
+    if (msg.toString().match(/[A-Za-z0-9_]/ + ' has made the advancement ' + /[A-Za-z0-9_! ]/)) {
+        try {
+            embed.setColor('GREEN').setDescription(`${emojis.success} ${msg.toString()}`);
+        } catch (error) {
+            console.error(error);
+        };
     };
 };
 
