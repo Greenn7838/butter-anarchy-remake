@@ -100,10 +100,10 @@ function embedColor(embed, msg, client) {
  * 
  * @param {mineflayer.Bot} bot 
  * @param {Discord.Client} client 
- * @param {String[]} msg 
+ * @param {Discord.Message} msg 
  */
 function Dis2MC(bot, client, msg) {
-    if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
+    if (msg.channel.id != process.env.DISCORD_LIVECHAT || msg.author.bot) return;
     msg.react('<a:Checkverify:1061192684146008144>');
     bot.chat(`> ${msg.toString()} [${stringGen(4)}]`);
 }
