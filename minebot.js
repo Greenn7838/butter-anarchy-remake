@@ -57,6 +57,10 @@ async function createBot(client) {
 
     presence(bot, client) // set presence
 
+    client.on('messageCreate', (msg) => {
+        Dis2MC(bot, client, msg);
+    })
+
 }
 
 /**
@@ -91,5 +95,27 @@ function embedColor(embed, msg, client) {
         embed.setColor('BLUE').setDescription(msg.toString());
     };
 };
+
+/**
+ * 
+ * @param {mineflayer.Bot} bot 
+ * @param {Discord.Client} client 
+ * @param {String[]} msg 
+ */
+function Dis2MC(bot, client, msg) {
+    if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
+    msg.react('<a:Checkverify:1061192684146008144>');
+    bot.chat(`> ${msg.toString()} [${stringGen(4)}]`);
+}
+
+function stringGen(yourNumber){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (var i = 0; i < yourNumber; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+   return text;
+  }
 
 module.exports = createBot
