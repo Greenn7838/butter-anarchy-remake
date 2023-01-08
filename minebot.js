@@ -50,8 +50,8 @@ async function createBot(client) {
 
     bot.on('message', async(msg) => {
         const embed = new Discord.MessageEmbed();
-        await embedColor(embed, msg, client)
-        client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
+        embedColor(embed, msg, client);
+        client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] });
     });
 
     bot.on('end', (reason) => { console.log(reason) }); // bao cao ly do bot k chay
@@ -62,7 +62,7 @@ async function createBot(client) {
         if (msg.author.bot) return;
         if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
         msg.react(emojis.check);
-        bot.chat(`> ${msg.toString()} [${stringGen(4)}]`);
+        bot.chat(`> [${msg.author.tag}] ${msg.toString()} [${stringGen(4)}]`);
     })
 
 }
