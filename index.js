@@ -47,6 +47,8 @@ const execute = () => {
 
     clearTimeout(client.mcTimeout == 0 ? undefined : client.mcTimeout);
 };
-//require('./web')(app);
+require('./web')(app);
+
+client.startMC = startMC;
 
 client.login(process.env.DISCORD_TOKEN);
