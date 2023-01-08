@@ -3,6 +3,7 @@ const mineflayer = require('mineflayer');
 const tpsPlugin = require('mineflayer-tps')(mineflayer);
 const Discord = require('discord.js');
 const emojis = require('./emojis.json');
+const afk = require('./mcbot/handlers/afk');
 
 // main function
 /**
@@ -18,6 +19,16 @@ async function createBot(client) {
         checkTimeoutInterval: 10 * 60 * 1000
     });
     bot.loadPlugin(tpsPlugin);
+    bot.commands = [];
+
+
+    require('./mcbot/handlers/command')(bot.commands);
+    require('./mcbot/handlers/event')(bot);
+
+    bot.on('spawn', () => {
+        afk(bot);
+        client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [new Discord.MessageEmbed().setColor('GREEN').setTitle('Bot đã vào trạng thái `AFK`')] })
+    })
 
     presence(bot, client) // set presence
 
