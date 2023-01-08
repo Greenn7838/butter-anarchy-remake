@@ -1,13 +1,22 @@
-const mineflayer = require('mineflayer');
-
-/**
- * 
- * @param {mineflayer.Bot} bot 
- */
-module.exports = async(bot) => {
-    setInterval(async () => {
-            let yaw = 2*Math.random()* Math.PI - (0.5*Math.PI);
-            let pitch = Math.random()* Math.PI - (0.5*Math.PI);
-            await bot.look(yaw, pitch, true);
-    }, 5 * 1000)
-}
+module.exports = (bot) => {
+    let rotater
+    let rotated = false
+    bot.afk = {}
+  
+    bot.afk.start = () => {
+      if (rotater) return
+      rotater = setInterval(rotate, 3000)
+      bot.setControlState('jump', true)
+    }
+  
+    bot.afk.stop = () => {
+      if (!rotater) return
+      clearInterval(rotater)
+      bot.setControlState('jump', false)
+    }
+  
+    function rotate() {
+      bot.look(rotated ? 0 : Math.PI, 0)
+      rotated = !rotated
+    }
+  }
