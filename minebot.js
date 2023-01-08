@@ -3,7 +3,7 @@ const mineflayer = require('mineflayer');
 const tpsPlugin = require('mineflayer-tps')(mineflayer);
 const Discord = require('discord.js');
 const emojis = require('./emojis.json');
-const afk = require('./mcbot/handlers/afk');
+const afk = require('mineflayer-antiafk');
 
 // main function
 /**
