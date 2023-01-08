@@ -1,7 +1,6 @@
 require('dotenv').config();
 const mineflayer = require('mineflayer');
 const Discord = require('discord.js');
-const livechatId = process.env.DISCORD_LIVECHAT;
 const emojis = require('../../emojis.json');
 
 /**
@@ -13,9 +12,6 @@ const emojis = require('../../emojis.json');
 module.exports = (bot, msg, client) => {
     const embed = new Discord.MessageEmbed();
     embedColor(embed, msg.toString(), client);
-    client.channels.fetch(process.env.DISCORD_LIVECHAT)
-        .then((c) => c.send({ embeds: [embed] }))
-        .catch(e => console.error(e));
 }
 
 function embedColor(embed, msg, client) {
@@ -39,4 +35,5 @@ function embedColor(embed, msg, client) {
     if (msg.toString().startsWith(queuePrefix)) {
         embed.setColor('GOLD').setDescription(msg.toString())
     }
+    client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
 };
