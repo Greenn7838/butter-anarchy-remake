@@ -2,11 +2,12 @@ require('dotenv').config();
 const mineflayer = require('mineflayer');
 const Discord = require('discord.js');
 const emojis = require('../../emojis.json');
+const prefix = process.env.PREFIX;
 
 /**
  * 
  * @param {mineflayer.Bot} bot 
- * @param {String[]} msg
+ * @param {string} msg
  * @param {Discord.Client} client 
  */
 module.exports = (bot, msg, client) => {
@@ -15,7 +16,7 @@ module.exports = (bot, msg, client) => {
     try {
         const channel = bot.client.channels.cache.get(process.env.DISCORD_LIVECHAT);
         channel.send({ embeds: [embed] })
-    } catch(e) { console.log(e) }
+    } catch(e) { console.log(e) };
 }
 
 function embedColor(embed, msg, client) {

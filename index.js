@@ -20,6 +20,6 @@ client.categories = fs.readdirSync('./commands');
 
 const createBot = require('./minebot');
 createBot(client);
-require('./web')(app);
+//require('./web')(app);
 
 client.login(process.env.DISCORD_TOKEN);
