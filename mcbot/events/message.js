@@ -12,6 +12,7 @@ const emojis = require('../../emojis.json');
 module.exports = (bot, msg, client) => {
     const embed = new Discord.MessageEmbed();
     embedColor(embed, msg.toString(), client);
+    bot.client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
 }
 
 function embedColor(embed, msg, client) {
@@ -35,5 +36,4 @@ function embedColor(embed, msg, client) {
     if (msg.toString().startsWith(queuePrefix)) {
         embed.setColor('GOLD').setDescription(msg.toString())
     }
-    client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
 };
