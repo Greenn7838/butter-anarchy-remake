@@ -28,7 +28,6 @@ async function createBot(client) {
 
     bot.on('spawn', () => {
         afk(bot);
-        client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [new Discord.MessageEmbed().setColor('GREEN').setTitle('Bot đã vào trạng thái `AFK`')] })
     })
 
     presence(bot, client) // set presence
