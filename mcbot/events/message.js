@@ -12,7 +12,8 @@ const emojis = require('../../emojis.json');
 module.exports = (bot, msg, client) => {
     const embed = new Discord.MessageEmbed();
     embedColor(embed, msg.toString(), client);
-    bot.client.channels.cache.get(process.env.DISCORD_LIVECHAT).send({ embeds: [embed] })
+    const channel = bot.client.channels.cache.get(process.env.DISCORD_LIVECHAT);
+    channel.send({ embeds: [embed] })
 }
 
 function embedColor(embed, msg, client) {

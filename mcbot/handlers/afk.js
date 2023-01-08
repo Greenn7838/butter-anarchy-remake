@@ -9,5 +9,5 @@ module.exports = async(bot) => {
             let yaw = 2*Math.random()* Math.PI - (0.5*Math.PI);
             let pitch = Math.random()* Math.PI - (0.5*Math.PI);
             await bot.look(yaw, pitch, true);
-    })
+    }, 5 * 1000)
 }
