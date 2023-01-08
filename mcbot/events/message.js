@@ -14,7 +14,7 @@ module.exports = (bot, msg, client) => {
     embedColor(embed, msg.toString(), client);
     try {
         const channel = bot.client.channels.cache.get(process.env.DISCORD_LIVECHAT);
-        console.log(channel)
+        channel.send({ embeds: [embed] })
     } catch(e) { console.log(e) }
 }
 
