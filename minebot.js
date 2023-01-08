@@ -20,6 +20,7 @@ async function createBot(client) {
     });
     bot.loadPlugin(tpsPlugin);
     bot.commands = [];
+    bot.client = client;
 
 
     require('./mcbot/handlers/command')(bot.commands);
