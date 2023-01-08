@@ -26,9 +26,7 @@ async function createBot(client) {
     require('./mcbot/handlers/command')(bot.commands);
     require('./mcbot/handlers/event')(bot);
 
-    bot.on('spawn', () => {
-        afk(bot);
-    })
+    afk(bot)
 
     presence(bot, client) // set presence
 
