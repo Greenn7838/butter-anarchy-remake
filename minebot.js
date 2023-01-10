@@ -4,6 +4,8 @@ const tpsPlugin = require('mineflayer-tps')(mineflayer);
 const Discord = require('discord.js');
 const emojis = require('./emojis.json');
 const afk = require('mineflayer-antiafk');
+const util = require('minecraft-server-util');
+const ms = require('ms');
 
 // main function
 /**
@@ -21,11 +23,7 @@ async function createBot(client) {
     bot.loadPlugin(tpsPlugin);
     bot.commands = [];
     bot.client = client;
-    bot.prefix = '$';
-
-
-    require('./mcbot/handlers/command')(bot.commands);
-    require('./mcbot/handlers/event')(bot);
+    const prefix = '$';
 
     bot.loadPlugin(afk);
 
@@ -38,8 +36,82 @@ async function createBot(client) {
         if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
         bot.chat(`> [${msg.author.tag}] ${msg.toString()} [${stringGen(4)}]`);
         msg.react(emojis.check);
+    });
+
+    // MCBot events ------------------------------------------
+    bot.on('windowOpen', async (window) => {
+            const pin = process.env.MC_PIN;
+            bot.clickWindow(pin.split(' ')[0], 0, 0);
+            bot.clickWindow(pin.split(' ')[1], 0, 0);
+            bot.clickWindow(pin.split(' ')[2], 0, 0);
+            bot.clickWindow(pin.split(' ')[3], 0, 0);
+            // send to server
+            sendEmbed(bot, client,
+                    new Discord.MessageEmbed()
+                        .setColor('GREEN')
+                        .setTitle(`Đã nhập mã PIN ${emojis.check}`)
+                );
+                setTimeout(() => {
+                    const embed = new Discord.MessageEmbed()
+                        .setColor('GREEN')
+                        .setTitle('Đã nhập `/anarchyvn`');
+                    bot.chat('/anarchyvn');
+                    sendEmbed(bot, client, embed);
+                }, ms('3s'));
+        
+            setTimeout(() => {
+                bot.clickWindow(13, 0, 0); // click Endcrystal
+                sendEmbed(bot, client,
+                    new Discord.MessageEmbed()
+                        .setColor('YELLOW')
+                        .setTitle(`Đã click ${emojis.crystal} \`End Crystal\``)
+                )
+            })
     })
 
+    bot.on('login', () => {
+        presence(bot, client); // setPresence
+    });
+
+
+    bot.on('message', async(msg) => {
+        const message = msg.toString();
+        await sendEmbed(bot, client, new Discord.MessageEmbed().setColor('AQUA').setDescription(message));
+    });
+
+    bot.on('chat', (user, chat) => {
+        const msg = chat.toString();
+        if (!msg.startsWith(prefix)) return;
+        const args = msg.slice(prefix.length).trim().split(/ +/g);
+        switch(args) {
+            case 'tps':
+                bot.chat(`/w ${user} TPS: ${bot.getTps()}`);
+                break;
+            case 'ping':
+                bot.chat(`> Ping: ${bot.player.ping}ms [${stringGen(4)}]`);
+                break;
+            case 'server':
+                util.status(process.env.MC_IP).then((res) => {
+                    bot.chat(`> TPS: ${bot.getTps()} | Players: ${res.players.online} / ${res.players.max} | Uptime: ${ms(client.uptime)} | [${stringGen(4)}]`)
+                });
+                break;
+        };
+    });
+
+    bot.on('end', (reason) => {
+        const embed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setDescription(`${emojis.danger} Bot đã mất kết nối đến server ${process.env.MC_IP}, kết nối lại sau 5 phút`);
+        sendEmbed(bot, client, embed);
+        console.log(`[Mineflayer] Bot mất kết nối tới server ${process.env.MC_IP}, đang kết nối lại...`);
+        setTimeout(() => {
+            const embed = new Discord.MessageEmbed()
+                .setColor('YELLOW')
+                .setDescription(`Đang kết nối lại server \`${process.env.MC_IP}\`...`);
+            sendEmbed(bot, client, embed);
+            createBot(client);
+        }, ms('5m'))
+    })
 }
 
 /**
@@ -56,7 +128,11 @@ async function presence(bot, client) {
     }, 5 * 1000);
 };
 
-
+async function sendEmbed(bot, client, embed) {
+    const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
+    if (!channel) return;
+    channel.send({ embeds: [embed] });
+}
 
 function stringGen(yourNumber){
     var text = "";
