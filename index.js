@@ -18,6 +18,6 @@ client.categories = fs.readdirSync('./commands');
 
 ['command', 'event'].forEach(handler => require(`./handlers/${handler}`)(client));
 
-client.mc = require('./minebot')(client);
+require('./minebot')(client).then(() => console.log('Logged in to Minecraft!'));
 
 client.login(process.env.DISCORD_TOKEN);
