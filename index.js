@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('node:events').EventEmitter.setMaxListeners(20);
 const express = require('express');
 const app = express();
 const Discord = require('discord.js');
