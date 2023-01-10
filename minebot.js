@@ -21,6 +21,7 @@ async function createBot(client) {
     bot.loadPlugin(tpsPlugin);
     bot.commands = [];
     bot.client = client;
+    bot.prefix = '$';
 
 
     require('./mcbot/handlers/command')(bot.commands);
