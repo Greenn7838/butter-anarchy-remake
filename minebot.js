@@ -39,6 +39,7 @@ async function createBot(client) {
     // MCBot events ------------------------------------------
     bot.on('windowOpen', async (window) => {
             const pin = process.env.PIN;
+            if (Number(window.slots.length) == 45) {
                 bot.clickWindow(pin.split(' ')[0], 0, 0);
                 bot.clickWindow(pin.split(' ')[1], 0, 0);
                 bot.clickWindow(pin.split(' ')[2], 0, 0);
@@ -49,6 +50,7 @@ async function createBot(client) {
                         .setColor('GREEN')
                         .setTitle(`Đã nhập mã PIN ${emojis.check}`)
                 );
+            }
             
                 setTimeout(() => {
                     const embed = new Discord.MessageEmbed()
@@ -56,7 +58,7 @@ async function createBot(client) {
                         .setTitle('Đã nhập `/anarchyvn`');
                     bot.chat('/anarchyvn');
                     sendEmbed(bot, client, embed);
-                }, ms('3s'));
+                }, 5 * 1000);
         
             setTimeout(() => {
                 bot.clickWindow(13, 0, 0); // click Endcrystal
@@ -65,7 +67,7 @@ async function createBot(client) {
                         .setColor('YELLOW')
                         .setTitle(`Đã click ${emojis.crystal} \`End Crystal\``)
                 )
-            })
+            }, 5 * 1000);
     })
 
     setInterval(() => {
