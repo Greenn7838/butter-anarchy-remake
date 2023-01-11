@@ -95,7 +95,7 @@ async function createBot(client) {
                 bot.chat(`> Ping: ${bot.player.ping}ms [${stringGen(4)}]`);
                 break;
             case 'server':
-                util.status(process.env.MC_IP).then((res) => {
+                util.status(process.env.IP).then((res) => {
                     bot.chat(`> TPS: ${bot.getTps()} | Players: ${res.players.online} / ${res.players.max} | Uptime: ${ms(client.uptime)} | [${stringGen(4)}]`)
                 });
                 break;
@@ -105,13 +105,13 @@ async function createBot(client) {
     bot.on('end', (reason) => {
         const embed = new Discord.MessageEmbed()
             .setColor('RED')
-            .setDescription(`${emojis.danger} Bot đã mất kết nối đến server ${process.env.MC_IP}, kết nối lại sau 5 phút`);
+            .setDescription(`${emojis.danger} Bot đã mất kết nối đến server ${process.env.IP}, kết nối lại sau 5 phút`);
         sendEmbed(bot, client, embed);
-        console.log(`[Mineflayer] Bot mất kết nối tới server ${process.env.MC_IP}, đang kết nối lại...`);
+        console.log(`[Mineflayer] Bot mất kết nối tới server ${process.env.IP}, đang kết nối lại...`);
         setTimeout(() => {
             const embed = new Discord.MessageEmbed()
                 .setColor('YELLOW')
-                .setDescription(`Đang kết nối lại server \`${process.env.MC_IP}\`...`);
+                .setDescription(`Đang kết nối lại server \`${process.env.IP}\`...`);
             sendEmbed(bot, client, embed);
             createBot(client);
         }, ms('5m'))
