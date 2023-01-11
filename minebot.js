@@ -29,8 +29,6 @@ async function createBot(client) {
 
     bot.afk.start();
 
-    presence(bot, client) // set presence
-
     client.on('messageCreate', (msg) => {
         if (msg.author.bot) return;
         if (msg.channel.id != process.env.DISCORD_LIVECHAT) return;
