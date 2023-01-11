@@ -14,9 +14,9 @@ const ms = require('ms');
  */
 async function createBot(client) {
     const bot = mineflayer.createBot({
-        host: process.env.MC_IP,
+        host: process.env.IP,
         port: 25565,
-        username: process.env.MC_USERNAME,
+        username: process.env.NAME,
         version: '1.16.5',
         checkTimeoutInterval: 10 * 60 * 1000
     });
@@ -38,17 +38,20 @@ async function createBot(client) {
 
     // MCBot events ------------------------------------------
     bot.on('windowOpen', async (window) => {
-            const pin = process.env.MC_PIN;
-            bot.clickWindow(pin.split(' ')[0], 0, 0);
-            bot.clickWindow(pin.split(' ')[1], 0, 0);
-            bot.clickWindow(pin.split(' ')[2], 0, 0);
-            bot.clickWindow(pin.split(' ')[3], 0, 0);
-            // send to server
-            sendEmbed(bot, client,
+            const pin = process.env.PIN;
+            setTimeout(() => {
+                bot.clickWindow(pin.split(' ')[0], 0, 0);
+                bot.clickWindow(pin.split(' ')[1], 0, 0);
+                bot.clickWindow(pin.split(' ')[2], 0, 0);
+                bot.clickWindow(pin.split(' ')[3], 0, 0);
+                // send to server
+                sendEmbed(bot, client,
                     new Discord.MessageEmbed()
                         .setColor('GREEN')
                         .setTitle(`Đã nhập mã PIN ${emojis.check}`)
                 );
+            }, ms('3s'))
+            
                 setTimeout(() => {
                     const embed = new Discord.MessageEmbed()
                         .setColor('GREEN')
