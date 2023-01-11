@@ -71,7 +71,7 @@ async function createBot(client) {
         const tps = bot.getTps() ? bot.getTps() : 20;
         const players = bot.players ? Object.values(bot.players).length : 1;
         const ping = bot.player ? bot.player.ping : 0;
-        client.user.setActivity({ name: `TPS: ${tps} | Players: ${players} | Ping: ${ping}ms`, type: 'WATCHING' });    
+        //client.user.setActivity({ name: `TPS: ${tps} | Players: ${players} | Ping: ${ping}ms`, type: 'WATCHING' });    
     }, 5 * 1000);
 
 
