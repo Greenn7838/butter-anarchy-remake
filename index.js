@@ -1,7 +1,6 @@
 require('events').EventEmitter.setMaxListeners(20);
 require('dotenv').config();
-const express = require('express');
-const app = express();
+const app = require('express')();
 const Discord = require('discord.js');
 const fs = require('fs');
 const client = new Discord.Client({
@@ -19,6 +18,12 @@ client.categories = fs.readdirSync('./commands');
 
 ['command', 'event'].forEach(handler => require(`./handlers/${handler}`)(client));
 
-require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
+if (!client.isReady()) { return; }
+else {
+    require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
+}
 
-client.login(process.env.DISCORD_TOKEN);
+require('./web')(app);
+
+console.log(process.env.DISCORD_TOKEN);
+//client.login(process.env.DISCORD_TOKEN);
