@@ -1,5 +1,4 @@
-require('dotenv').config();
-require('node:events').EventEmitter.setMaxListeners(20);
+require('events').EventEmitter.setMaxListeners(20);
 const express = require('express');
 const app = express();
 const Discord = require('discord.js');
@@ -13,12 +12,17 @@ const client = new Discord.Client({
     }
 });
 
+try {
+    require('dotenv').config({ path: '/etc/secrets/<filename>/.env' });
+    client.login(process.env.DISCORD_TOKEN).catch((e) => {});
+} catch(err) {
+    console.log(`[DISCORD] Đã xảy ra lỗi khi đăng nhập bằng token`, err);
+};
+
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = fs.readdirSync('./commands');
 
 ['command', 'event'].forEach(handler => require(`./handlers/${handler}`)(client));
 
-require('./minebot')(client).then(() => console.log('Logged in to Minecraft!'));
-
-client.login(process.env.DISCORD_TOKEN);
+require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
