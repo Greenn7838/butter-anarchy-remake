@@ -1,4 +1,5 @@
 require('events').EventEmitter.setMaxListeners(20);
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const Discord = require('discord.js');
@@ -20,9 +21,4 @@ client.categories = fs.readdirSync('./commands');
 
 require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
 
-try {
-    require('dotenv').config();
-    client.login(process.env.DISCORD_TOKEN).catch((e) => {});
-} catch(err) {
-    console.log(`[DISCORD] Đã xảy ra lỗi khi đăng nhập bằng token`, err);
-};
+client.login(process.env.DISCORD_TOKEN);
