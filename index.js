@@ -13,7 +13,7 @@ const client = new Discord.Client({
 });
 
 try {
-    require('dotenv').config({ path: '/etc/secrets/<filename>/.env' });
+    require('dotenv').config({ path: '/etc/secrets/.env' });
     client.login(process.env.DISCORD_TOKEN).catch((e) => {});
 } catch(err) {
     console.log(`[DISCORD] Đã xảy ra lỗi khi đăng nhập bằng token`, err);
