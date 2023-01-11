@@ -39,7 +39,6 @@ async function createBot(client) {
     // MCBot events ------------------------------------------
     bot.on('windowOpen', async (window) => {
             const pin = process.env.PIN;
-            setTimeout(() => {
                 bot.clickWindow(pin.split(' ')[0], 0, 0);
                 bot.clickWindow(pin.split(' ')[1], 0, 0);
                 bot.clickWindow(pin.split(' ')[2], 0, 0);
@@ -50,7 +49,6 @@ async function createBot(client) {
                         .setColor('GREEN')
                         .setTitle(`Đã nhập mã PIN ${emojis.check}`)
                 );
-            }, ms('3s'))
             
                 setTimeout(() => {
                     const embed = new Discord.MessageEmbed()
