@@ -37,38 +37,35 @@ async function createBot(client) {
     });
 
     // MCBot events ------------------------------------------
-    bot.on('windowOpen', async (window) => {
-            const pin = process.env.PIN;
-            if (Number(window.slots.length) == 45) {
-                bot.clickWindow(pin.split(' ')[0], 0, 0);
-                bot.clickWindow(pin.split(' ')[1], 0, 0);
-                bot.clickWindow(pin.split(' ')[2], 0, 0);
-                bot.clickWindow(pin.split(' ')[3], 0, 0);
-                // send to server
-                sendEmbed(bot, client,
-                    new Discord.MessageEmbed()
-                        .setColor('GREEN')
-                        .setTitle(`Đã nhập mã PIN ${emojis.check}`)
-                );
-            }
-            
-                setTimeout(() => {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('GREEN')
-                        .setTitle('Đã nhập `/anarchyvn`');
-                    bot.chat('/anarchyvn');
-                    sendEmbed(bot, client, embed);
-                }, 5 * 1000);
-        
-            setTimeout(() => {
-                bot.clickWindow(13, 0, 0); // click Endcrystal
-                sendEmbed(bot, client,
-                    new Discord.MessageEmbed()
-                        .setColor('YELLOW')
-                        .setTitle(`Đã click ${emojis.crystal} \`End Crystal\``)
-                )
-            }, 5 * 1000);
-    })
+    bot.on('windowOpen', async (window) => { // Thực hiện khi khung login hiện ra
+        // Sửa dòng leak memory
+        window.requiresConfirmation = false;
+    
+        /* 
+         * Nhập 4 số mã pin. Nhưng cần nhập trong .env 
+         * Cách nhập: Thí dụ pin là 9999, thì đặt phần pin là 9,9,9,9 ( Thí dụ: PIN=9 9 9 9 )
+         */
+        var v = process.env.PIN;
+        var p1 = v.split(" ")[0]; // lấy mã trước dấu cách
+        var p2 = v.split(" ")[1]; // lấy mã sau dấu cách thứ 1
+        var p3 = v.split(" ")[2]; // lấy mã sau dấu cách thứ 2
+        var p4 = v.split(" ")[3]; // lấy mã sau dấu cách thứ 3
+    
+    
+        if(!p1 || !p2 || !p3 || !p4) return console.log("Vui lòng kiểm tra lại mã pin, phải ghi đúng như example, hãy đặt nếu như bạn chưa đặt nó.");
+    
+        // Thực hiện các mã pin đã được đặt
+        bot.clickWindow(p1, 0, 0);
+        bot.clickWindow(p2, 0, 0);
+        bot.clickWindow(p3, 0, 0);
+        bot.clickWindow(p4, 0, 0);
+    
+        // Cho bot vào server
+        setTimeout(() => { bot.chat('/anarchyvn'); sendEmbed(bot, client, new Discord.MessageEmbed().setColor('GREEN').setDescription('Đã nhập `/anarchyvn`')) }, 5*1000); // Dùng /2y2c sau khi login xong
+    
+        setTimeout(() => { bot.clickWindow(13,0,0); sendEmbed(bot, client, new Discord.MessageEmbed().setColor('YELLOW').setDescription(`Đã click ${emojis.crystal} \`End Crystal\``)) }, 10*1000); // Sau đó bấm vào khung kia để vào server
+    });
+    
 
     setInterval(() => {
         const tps = bot.getTps() ? bot.getTps() : 20;
