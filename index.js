@@ -39,7 +39,7 @@ client.balance = async(id) => {
     if (profile) {
         return profile;
     } else {
-        profile = new balance({ _id: mongoose.Types.ObjectId , userId: id });
+        profile = new balance({ userId: id });
         await profile.save().catch(err => console.error(err));
         return profile;
     }
