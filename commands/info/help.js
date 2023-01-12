@@ -82,7 +82,7 @@ module.exports ={
                 .addOptions(menuOptions)
         );
 
-        var msg = await message.reply({ embeds: [embed], components:[row], fetchReply: true });
+        var msg = await message.reply({ embeds: [embed.toJSON()], components:[row], fetchReply: true });
 
         const filter = i => !i.user.bot;
         const collector = message.channel.createMessageComponentCollector({
@@ -112,7 +112,7 @@ module.exports ={
                 });
 
 
-                msg = await msg.edit({ embeds: [embed], components: [row], fetchReply: true })
+                msg = await msg.edit({ embeds: [embed.toJSON()], components: [row], fetchReply: true })
             }
 
             if (value === 'home') {
@@ -126,12 +126,12 @@ module.exports ={
                     )
                 });
 
-                msg = await msg.edit({ embeds: [embed], components: [row], fetchReply: true })
+                msg = await msg.edit({ embeds: [embed.toJSON()], components: [row], fetchReply: true })
             };
         });
 
         collector.on('end', async() => {
-            msg = await msg.edit({ embeds: [embed], components: [row], fetchReply: true })
+            msg = await msg.edit({ embeds: [embed.toJSON()], components: [row], fetchReply: true })
         })
     }
 }

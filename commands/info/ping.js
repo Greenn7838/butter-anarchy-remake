@@ -18,7 +18,7 @@ module.exports = {
                     .setDescription(`
                         Ping phản hồi: \`${msg.createdTimestamp - message.createdTimestamp}ms\`
                         Ping API: \`${client.ws.ping}ms\`
-                    `);
+                    `).toJSON();
                 msg.edit({ embeds: [embed] })
             })
     }

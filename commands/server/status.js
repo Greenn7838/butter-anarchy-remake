@@ -30,7 +30,7 @@ module.exports = {
                     .setTitle('Status checked!')
                     .setThumbnail(faviconURL)
                     .setDescription('```' + table.toString() + '```');
-                    message.reply({ embeds: [embed] })
+                    message.reply({ embeds: [embed.toJSON()] })
 
             });
         
