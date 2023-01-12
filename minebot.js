@@ -115,9 +115,22 @@ async function createBot(client) {
     })
 }
 
+// custom embed variables
+const colors = {
+    red : '#ff1a1a',
+    green : '#00cc00',
+    blue : '#0040ff',
+    yellow : '#ffd633',
+    purple: '#8000ff',
+    pink : '#ff33cc'
+};
+const deathprefix = '[ANARCHYVN]';
+const donatorprefix = '<[Donator]';
+
 async function sendEmbed(bot, client, embed) {
     const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
     if (!channel) return;
+
     channel.send({ embeds: [embed] });
 }
 
