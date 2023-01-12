@@ -23,7 +23,7 @@ require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflay
 
 require('./web')(app);
 
-Levels.setURL('mongodb+srv://tung:1@avocadotree.dtmlcbu.mongodb.net/?retryWrites=true&w=majority');
+//Levels.setURL('mongodb+srv://tung:1@avocadotree.dtmlcbu.mongodb.net/?retryWrites=true&w=majority');
 
 mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true,
