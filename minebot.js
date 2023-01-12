@@ -77,7 +77,7 @@ async function createBot(client) {
 
     bot.on('message', async(msg) => {
         const message = msg.toString();
-        await sendEmbed(bot, client, new Discord.MessageEmbed().setColor('AQUA').setDescription(message));
+        await sendEmbed(bot, client, message);
     });
 
     bot.on('chat', (user, chat) => {
@@ -127,11 +127,32 @@ const colors = {
 const deathprefix = '[ANARCHYVN]';
 const donatorprefix = '<[Donator]';
 
-async function sendEmbed(bot, client, embed) {
+/**
+ * 
+ * @param {mineflayer.Bot} bot 
+ * @param {Discord.Client} client 
+ * @param {String} msg 
+ * @returns 
+ */
+async function sendEmbed(bot, client, msg) {
+    let str = ``;
+    const embed = new Discord.MessageEmbed();
     const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
     if (!channel) return;
 
-    channel.send({ embeds: [embed] });
+    if (msg.startsWith(deathprefix)) {
+        // death event
+        str = `${emojis.death} ${msg}`;
+        embed.setColor(colors.red).setDescription(str);
+    } else if (msg.startsWith(donatorprefix)) {
+        str = `${emojis.donator} ${msg}`;
+        embed.setColor(colors.yellow).setDescription(str);
+    } else {
+        str = `${msg}`;
+        embed.setColor(colors.blue).setDescription(str);
+    };
+
+    channel.send({ embeds: [embed] })
 }
 
 function stringGen(yourNumber){

@@ -16,8 +16,8 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = fs.readdirSync('./commands');
 
-['command', 'event'].forEach(handler => require(`./handlers/${handler}`)(client));
-
+require('./handlers/command')(client);
+require('./handlers/event')(client);
 
 require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
 
