@@ -67,17 +67,18 @@ async function createBot(client) {
     });
     
 
-    setInterval(() => {
+    setInterval(async() => {
         const tps = bot.getTps() ? bot.getTps() : 20;
         const players = bot.players ? Object.values(bot.players).length : 1;
         const ping = bot.player ? bot.player.ping : 0;
-        client.user.setActivity({ name: `TPS: ${tps} | Players: ${players} | Ping: ${ping}ms`, type: 'WATCHING' });    
+        await client.user.setPresence({ activities: [{ name: `TPS: ${tps} | Players: ${players} | Ping: ${ping}ms`, type: 'WATCHING' }], status: 'online' })
     }, 5 * 1000);
 
 
     bot.on('message', async(msg) => {
-        const message = msg.toString();
-        await sendEmbed(bot, client, message);
+        const embed = new Discord.MessageEmbed();
+        await embedColor(embed, msg.toString());
+        sendEmbed(bot, client, embed);
     });
 
     bot.on('chat', (user, chat) => {
@@ -126,20 +127,14 @@ const colors = {
 };
 const deathprefix = '[ANARCHYVN]';
 const donatorprefix = '<[Donator]';
-
 /**
  * 
- * @param {mineflayer.Bot} bot 
  * @param {Discord.Client} client 
+ * @param {Discord.MessageEmbed} embed 
  * @param {String} msg 
- * @returns 
  */
-async function sendEmbed(bot, client, msg) {
+async function embedColor(embed, msg) {
     let str = ``;
-    const embed = new Discord.MessageEmbed();
-    const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
-    if (!channel) return;
-
     if (msg.startsWith(deathprefix)) {
         // death event
         str = `${emojis.death} ${msg}`;
@@ -151,8 +146,18 @@ async function sendEmbed(bot, client, msg) {
         str = `${msg}`;
         embed.setColor(colors.blue).setDescription(str);
     };
+}
 
-    channel.send({ embeds: [embed] })
+/**
+ * 
+ * @param {mineflayer.Bot} bot 
+ * @param {Discord.Client} client 
+ * @param {Discord.MessageEmbed} embed 
+ */
+async function sendEmbed(bot, client, embed) {
+    const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
+    if (!channel) return;
+    await channel.send({ embeds: [embed] });
 }
 
 function stringGen(yourNumber){

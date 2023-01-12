@@ -6,6 +6,7 @@ module.exports ={
     name: 'help',
     aliases: ['cmd', 'commands'],
     category: 'info',
+    description: 'Xem tất cả các lệnh của bot',
     /**
      * 
      * @param {Discord.Client} client 
@@ -37,13 +38,14 @@ module.exports ={
 
         const emoji = {
             "info": 'ℹ',
-            "music": '🎶',
+            "economy": "💵",
             "server": '🎮'
         };
         let page = 0;
         const description = {
             "info" : "thông tin của bot",
-            "server" : "về server Minecraft"
+            "server" : "về server Minecraft",
+            "economy": "về hệ thống tiền tệ của bot"
         };
 
         const menuOptions = [
@@ -64,7 +66,7 @@ module.exports ={
         dirs.forEach((dir) => {
             embed.addField(
                 `${emoji[dir] || ""} ${dir.charAt(0).toUpperCase() + dir.slice(1).toLowerCase()}`,
-                `Các lệnh của${description[dir] ? description[dir] : dir.charAt(0).toUpperCase() + dir.slice(1).toLowerCase()}`
+                `Các lệnh ${description[dir] ? description[dir] : dir.charAt(0).toUpperCase() + dir.slice(1).toLowerCase()}`
             );
 
             menuOptions.push({

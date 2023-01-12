@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'ping',
     category: 'info',
+    description: 'Xem ping của bot',
     /**
      * 
      * @param {Discord.Client} client 
