@@ -42,9 +42,8 @@ module.exports ={
         };
         let page = 0;
         const description = {
-            "info" : "Các lệnh thông tin của bot",
-            "music" : "Các lệnh phát nhạc của bot",
-            "server" : "Các lệnh về server Minecraft"
+            "info" : "thông tin của bot",
+            "server" : "về server Minecraft"
         };
 
         const menuOptions = [
