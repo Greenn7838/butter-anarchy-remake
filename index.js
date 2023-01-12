@@ -3,7 +3,6 @@ require('dotenv').config();
 const app = require('express')();
 const mongoose = require('mongoose');
 const Discord = require('discord.js');
-const economy = require('./models/economy');
 const fs = require('fs');
 const Levels = require('discord-xp');
 const client = new Discord.Client({
@@ -33,14 +32,4 @@ mongoose.connect(process.env.MONGODB, {
 
 mongoose.set('strictQuery', false);
 
-client.profile = async(id) => {
-    let profile = await economy.findOne({ id });
-    if (!profile) {
-        profile = new economy({ id: id });
-        profile.save();
-        return profile;
-    } else {
-        return profile;
-    }
-}
 client.login(process.env.DISCORD_TOKEN);
