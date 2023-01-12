@@ -10,9 +10,9 @@ module.exports = async(client, message) => {
     const rand = Math.floor(Math.random() * 10) + 1;
     if (message.author.bot || !message.content.startsWith(process.env.PREFIX) || !message.guild) return;
 
-    const hasLeveledUp = Levels.default.appendXp(message.author.id, message.guildId, rand);
+    const hasLeveledUp = Levels.appendXp(message.author.id, message.guildId, rand);
     if (hasLeveledUp) {
-        const user = await Levels.default.fetch(message.author.id, message.guild.id);
+        const user = await Levels.fetch(message.author.id, message.guild.id);
         message.channel.send(`🎉 ${message.author}, bạn đã lên cấp ${user.level}`)
     }
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);

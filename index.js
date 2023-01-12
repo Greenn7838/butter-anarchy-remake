@@ -28,7 +28,7 @@ require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflay
 
 require('./web')(app);
 
-Levels.default.setURL(process.env.MONGODB);
+Levels.setURL(process.env.MONGODB);
 
 mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true,
