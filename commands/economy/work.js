@@ -4,7 +4,7 @@ const balance = require('../../models/economy');
 module.exports = {
     name: 'work',
     aliases: ['w'],
-    cooldown: 5 * 1000,
+    cooldown: 5,
     description: 'Làm việc để kiếm thêm tiền',
     /**
      * 
