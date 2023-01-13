@@ -21,9 +21,9 @@ client.emoji = require('./emojis.json');
 require('./handlers/command')(client);
 require('./handlers/event')(client);
 
-require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
+//require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
 
-require('./web')(app);
+//require('./web')(app);
 
 Levels.setURL(process.env.MONGODB);
 

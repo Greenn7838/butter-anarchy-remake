@@ -1,0 +1,36 @@
+const balance = require('../../models/economy');
+const { Client, Message } = require('discord.js');
+
+module.exports = {
+    name: 'pay',
+    aliases: ['give', 'lend'],
+    description: 'Cho người khác tiền của bạn',
+    /**
+     * 
+     * @param {Client} client 
+     * @param {Message} message 
+     * @param {String} args 
+     */
+    run: async(client, message, args) => {
+        if (!args[0]) return message.channel.send(`Bạn phải chỉ định người để đưa tiền`);
+        if (!args[1] || isNaN(args[1])) return message.channel.send(`Bạn phải chỉ định số tiền đưa ra, hoặc số tiền chỉ định không hợp lệ`);
+        const givenUser = message.mentions.members.first();
+        if (!givenUser) return message.channel.send(`Bạn cần đưa ra người hợp lệ!`)
+        const amountofMoney = parseInt(args[1]);
+        if (amountofMoney > 20000) return message.channel.send(`Bạn đang đưa ra số tiền quá lớn, bot chỉ chuyển được \`$20,000\` tiền tối đa`);
+
+        const giver = await client.balance(message.author.id);
+        const given = await client.balance(givenUser.id);
+        
+        if (giver.money < amountofMoney) return message.channel.send(`Bạn không được chỉ định số tiền quá lớn so với tài khoản của mình`);
+
+        try {
+            balance.findOneAndUpdate({ userId: giver.id }, { $inc: { money: -1 * amountofMoney } });
+            balance.findOneAndUpdate({ userId: given.id }, { $inc: { money: 1 * amountofMoney } }); 
+            message.channel.send(`💳 **${message.author.username}** đã chuyển thành công cho **${givenUser.displayName}** số tiền là **${amountofMoney}**`)   
+        } catch(e) {
+            message.channel.send(`${client.emoji.danger} Oops! Có vẻ đã có trục trặc khi đang chuyển tiền`);
+            console.log(e);
+        }
+    }
+}

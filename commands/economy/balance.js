@@ -12,6 +12,6 @@ module.exports = {
      */
     run: async(client, message, args) => {
         let profile = await client.balance(message.author.id);
-        message.channel.send(`**${message.author.username}** hiện tại đang có ${client.emoji.dollar}${profile.money} tiền`)
+        message.channel.send(`**${message.author.username}** | Bạn hiện tại đang có ${client.emoji.dollar} **${profile.money}** tiền`)
     }
 }

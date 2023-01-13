@@ -17,7 +17,7 @@ module.exports = {
         const profile = await client.balance(message.author.id);
         try {
             await balance.findOneAndUpdate({ userId: profile.userId }, { money: profile.money += randomNum  });
-            message.reply(`**${message.author.username}** đã nhận được ${client.emoji.dollar}${randomNum} tiền`)
+            message.reply(`**${message.author.username}** đã nhận được ${client.emoji.dollar} **${randomNum}** tiền`)
         } catch(e) {
             console.log(e);
         }

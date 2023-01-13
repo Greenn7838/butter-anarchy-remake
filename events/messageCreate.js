@@ -17,17 +17,18 @@ module.exports = async(client, message) => {
             if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Discord.Collection());
             const now = Date.now();
             const timestamps = client.cooldowns.get(command.name);
-            const cooldownAmount = (command.cooldown || 3 ) * 1000;
+            const cooldownAmount = (command.cooldown || 3) * 1000;
             if (timestamps.has(message.author.id)) {
                 const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-                if (now < expirationTime ) {
+                if (now < expirationTime) {
                     const timeLeft = (expirationTime - now) / 1000;
-                    return message.reply(`Vui lòng chờ \`${timeLeft.toFixed(1)}\` giây để sử dụng lệnh này!`);
+                    return message.channel.send(`⏱️ Bạn cần phải chờ \`${timeLeft.toFixed(1)}s\` nữa để có thể dùng lệnh`);
                 }
-                timestamps.set(message.author.id, now);
-                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
             }
-            command.run(client,message,args);
+
+            timestamps.set(message.author.id, now);
+            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            command.run(client, message, args);
         }
 }
