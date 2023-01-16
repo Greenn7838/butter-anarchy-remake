@@ -5,23 +5,13 @@ module.exports = {
     name: 'status',
     description: 'Xem trạng thái của một server minecraft',
     type: 'CHAT_INPUT',
-    options: [
-        {
-            name: 'address',
-            description: 'IP của server cần tìm',
-            type: 'STRING',
-            required: true,
-        },
-    ],
     /**
      * 
      * @param {Client} client 
      * @param {CommandInteraction} interaction 
      */
     run: async(client, interaction) => {
-        const addr = interaction.options.getString('address');
-        if (!addr || !addr.includes('.')) return interaction.reply(client.emoji.x + 'IP server không hợp lệ!!!');
-        util.status(addr).then((res) => {
+        util.status('anarchyvn.net').then((res) => {
             const embed = new MessageEmbed()
                 .setColor('GREEN')
                 .setTitle('Trạng thái server ' + addr)

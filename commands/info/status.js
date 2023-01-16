@@ -17,9 +17,7 @@ module.exports = {
         let faviconURL = '';
         const embed = new Discord.MessageEmbed();
         const table = new asciitable();
-        if (!args[0]) return message.reply('Bạn phải nhập IP server');
-        const mcIPstring = args[0].toLowerCase();
-        mcUtil.status(mcIPstring, 25565)
+        mcUtil.status('anarchyvn.net', 25565)
             .then(res => {
                 table.addRow(`IP server: ${args[0].toLowerCase()}`)
                     .addRow(`Version: ${res.version.name}`)
