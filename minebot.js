@@ -81,23 +81,20 @@ async function createBot(client) {
         sendEmbed(bot, client, embed);
     });
 
-    bot.on('chat', (user, chat) => {
-        const msg = chat.toString();
-        if (!msg.startsWith(prefix)) return;
-        const args = msg.slice(prefix.length).trim().split(/ +/g);
-        switch(args) {
-            case 'tps':
-                bot.chat(`/w ${user} TPS: ${bot.getTps()}`);
-                break;
-            case 'ping':
-                bot.chat(`> Ping: ${bot.player.ping}ms [${stringGen(4)}]`);
-                break;
-            case 'server':
-                util.status(process.env.IP).then((res) => {
-                    bot.chat(`> TPS: ${bot.getTps()} | Players: ${res.players.online} / ${res.players.max} | Uptime: ${ms(client.uptime)} | [${stringGen(4)}]`)
-                });
-                break;
-        };
+    // chat Patterns
+    bot.addChatPattern('tps', /.*/tps, { parse: true });
+    bot.on('chat:tps', (user) => {
+        bot.chat(`/w ${user} TPS: ${bot.getTps()}`);
+    });
+    bot.addChatPattern('server', /.*/tps, { parse: true });
+    bot.on('chat:server', async(msg) => {
+        await util.status(process.env.IP).then((res) => {
+            bot.chat(`> TPS: ${bot.getTps()} | Ping: ${bot.player.ping}ms | Players: ${res.players.online} / ${res.players.max} [${stringGen(4)}]`)
+        });
+    });
+    bot.addChatPattern('coords', /.*/coords, { parse: true });
+    bot.on('chat:coords', (msg) => {
+        bot.chat(`> Toạ độ đang đứng: X: ${bot.entity.position.x} Y: ${bot.entity.position.y} Z: ${bot.entity.position.z} [${stringGen(4)}]`)
     });
 
     bot.on('end', (reason) => {
