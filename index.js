@@ -14,14 +14,16 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = fs.readdirSync('./commands');
 client.cooldowns = new Discord.Collection();
+client.interactions = new Discord.Collection();
 client.emoji = require('./emojis.json');
 
 require('./handlers/command')(client);
 require('./handlers/event')(client);
+require('./handlers/slash')(client);
 
-require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
+//require('./minebot')(client).then(() => console.log('Đã đăng nhập Mineflayer API'));
 
-require('./web')(app);
+//require('./web')(app);
 
 Levels.setURL(process.env.MONGODB);
 

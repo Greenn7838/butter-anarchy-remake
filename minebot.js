@@ -23,7 +23,6 @@ async function createBot(client) {
     bot.loadPlugin(tpsPlugin);
     bot.commands = [];
     bot.client = client;
-    const prefix = '$';
 
     bot.loadPlugin(afk);
 
@@ -82,17 +81,17 @@ async function createBot(client) {
     });
 
     // chat Patterns
-    bot.addChatPattern('tps', /.*/tps, { parse: true });
+    bot.addChatPattern('tps', /!tps/, { parse: true });
     bot.on('chat:tps', (user) => {
         bot.chat(`/w ${user} TPS: ${bot.getTps()}`);
     });
-    bot.addChatPattern('server', /.*/tps, { parse: true });
+    bot.addChatPattern('server', /!server/, { parse: true });
     bot.on('chat:server', async(msg) => {
         await util.status(process.env.IP).then((res) => {
             bot.chat(`> TPS: ${bot.getTps()} | Ping: ${bot.player.ping}ms | Players: ${res.players.online} / ${res.players.max} [${stringGen(4)}]`)
         });
     });
-    bot.addChatPattern('coords', /.*/coords, { parse: true });
+    bot.addChatPattern('coords', /!coords/, { parse: true });
     bot.on('chat:coords', (msg) => {
         bot.chat(`> Toạ độ đang đứng: X: ${bot.entity.position.x} Y: ${bot.entity.position.y} Z: ${bot.entity.position.z} [${stringGen(4)}]`)
     });
