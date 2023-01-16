@@ -14,7 +14,7 @@ module.exports = {
         util.status('anarchyvn.net').then((res) => {
             const embed = new MessageEmbed()
                 .setColor('GREEN')
-                .setTitle('Trạng thái server ' + addr)
+                .setTitle('Status AnarchyVN')
                 .addFields(
                     {
                         name: 'Người chơi',
@@ -32,7 +32,7 @@ module.exports = {
                         inline: false
                     }
                 )
-                .setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${addr}`);
+                .setThumbnail(`https://eu.mc-api.net/v3/server/favicon/anarchyvn.net`);
             interaction.reply({ embeds: [embed] })
         })
     }
