@@ -1,6 +1,6 @@
 const fs = require('fs');
 const slashCommands = [];
-const guildId = '1058951056245137498';
+const guildId = '959756304749039626';
 
 module.exports = (client) => {
     fs.readdirSync('./slashCommands/').forEach(dir => {
