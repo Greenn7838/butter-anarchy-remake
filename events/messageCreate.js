@@ -23,7 +23,7 @@ module.exports = async(client, message) => {
 
                 if (now < expirationTime) {
                     const timeLeft = (expirationTime - now) / 1000;
-                    return message.channel.send(`⏱️ Bạn cần phải chờ \`${timeLeft.toFixed(1)}s\` nữa để có thể dùng lệnh`);
+                    return message.channel.send(`${client.emoji.cooldown} Bạn cần phải chờ \`${timeLeft.toFixed(1)}s\` nữa để có thể dùng lệnh`);
                 }
             }
 

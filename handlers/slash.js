@@ -1,6 +1,7 @@
 const fs = require('fs');
 const slashCommands = [];
-const guildId = '959756304749039626';
+require('dotenv').config();
+const guildId = process.env.GUILDID;
 
 module.exports = (client) => {
     fs.readdirSync('./slashCommands/').forEach(dir => {
