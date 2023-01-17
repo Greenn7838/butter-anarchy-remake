@@ -6,7 +6,7 @@ const emojis = require('./emojis.json');
 const afk = require('mineflayer-antiafk');
 const util = require('minecraft-server-util');
 const ms = require('ms');
-const actions = ['rotate', 'jump'];
+const actions = ['jump'];
 
 // main function
 /**
@@ -26,11 +26,7 @@ async function createBot(client) {
     bot.client = client;
     bot.loadPlugin(afk);
 
-    bot.afk.chatMessages = [
-        '> Tham gia server Discord PW ngay tại: https://dsc,gg/phoenixwarriors',
-        '> hentaiz,in | javx,biz | pornhub,com | rule34,xxx',
-        '> Sếch',
-    ];
+    bot.afk.chatting = false;
     bot.afk.actions = actions;
 
     bot.afk.start();
@@ -103,6 +99,28 @@ async function createBot(client) {
         bot.chat(`> Toạ độ đang đứng: X: ${bot.entity.position.x} Y: ${bot.entity.position.y} Z: ${bot.entity.position.z} [${stringGen(4)}]`)
     });
 
+    setInterval(() => {
+        const msgs = [
+            'Tham gia server discord của PW ngay tại: https://dsc,gg/phoenixwarriors',
+            'Anh có tất cả, nhưng thiếu em...',
+            'Sách là nguồn tri thức dồi dào, nhưng ở đây thì khác',
+            'Điều đáng sợ nhất đối với mỗi người là mỗi ngày thức dậy. Và nhận ra trong cuộc sống mình không có người và điều gì để chờ đợi, cố gắng.',
+            'Không phải vết thương nào cũng chảy máu. Và cũng không phải không chảy máu là không bị đau.',
+            'Cuộc sống đầy ắp những việc không như ý, chúng ta chẳng thể nào né tránh. Điều duy nhất có thể làm là thay đổi góc nhìn về nó.',
+            'Điểm yếu khi ta còn trẻ là dễ mắc những sai lầm trong cuộc sống. Nhưng bù lại, chúng ta có sức sống mạnh mẽ. Dễ dàng hỏi phục và vươn lên.',
+            'Thời gian là thứ quý giá mà cuộc sống ban tặng. Nó có thể đưa mọi thứ vào trong lãng quên.',
+            'Từ trải nghiệm của quá khứ chúng ta ta rút ra bài học dẫn đường cho tương lai.',
+            'Cuộc sống không phải là một vấn đề cần phải được giải quyết, mà là một thực tại cần phải được trải nghiệm.',
+            'Free kits at 0 0 nether',
+            'Sự tương tác giữa tri thức và kỹ năng với trải nghiệm là chìa khóa của việc học hỏi.',
+            'Khó khăn rồi sẽ qua đi. Giống như cơn mưa ngoài cửa sổ, có tầm tã cỡ nào rồi cuối cùng cũng sẽ trời quang mây tạnh.',
+            'Hãy giữ khuôn mặt bạn luôn hướng về ánh mặt trời, và bóng tối sẽ ngả phía sau bạn.',
+            'Đừng bao giờ hối tiếc những điều xảy ra trong quá khứ, vì thời điểm ấy, đó chính xác là những gì bạn muốn.'
+        ];
+        const randNum = Math.floor(Math.random() * msgs.length);
+        bot.chat(`> ${msgs[randNum]} [${stringGen(4)}]`);
+    }, ms('1m'))
+
     bot.on('end', (reason) => {
         const embed = new Discord.MessageEmbed()
             .setColor('RED')
@@ -163,6 +181,11 @@ async function sendEmbed(bot, client, embed) {
     await channel.send({ embeds: [embed] });
 }
 
+/**
+ * 
+ * @param {Number} yourNumber 
+ * @returns 
+ */
 function stringGen(yourNumber){
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
