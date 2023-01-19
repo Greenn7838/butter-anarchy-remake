@@ -6,7 +6,9 @@ const emojis = require('./emojis.json');
 const afk = require('mineflayer-antiafk');
 const util = require('minecraft-server-util');
 const ms = require('ms');
+const e = require('express');
 const actions = ['jump'];
+const statusId = '1059775588493181048';
 
 // main function
 /**
@@ -26,7 +28,7 @@ async function createBot(client) {
     bot.client = client;
     bot.loadPlugin(afk);
 
-    bot.afk.chatting = false;
+    bot.afk.chatMessages = []
     bot.afk.actions = actions;
 
     bot.afk.start();
@@ -83,25 +85,29 @@ async function createBot(client) {
         sendEmbed(bot, client, embed);
     });
 
-    // chat Patterns
-    bot.addChatPattern('tps', /^!(tps)/, { parse: true });
-    bot.on('chat:tps', (user) => {
+    // chat Patterns - Regex: /<.+> (value)/
+    bot.addChatPattern('tps', /<.+> (!tps|a!tps)/, { parse: true })
+    bot.addChatPattern('server', /<.+> (!server|a!server)/, { parse: true });
+    bot.addChatPattern('coords', /<.+> (!coords|a!coords)/, { parse: true });
+    bot.addChatPattern('botinfo', /<.+> (!botinfo|a!botinfo)/, { parse: true });
+
+    bot.on('chat:tps', (msg) => {
         bot.chat(`> TPS: ${bot.getTps()}`);
     });
-    bot.addChatPattern('server',/^!(server)/, { parse: true });
     bot.on('chat:server', async(msg) => {
         await util.status(process.env.IP).then((res) => {
             bot.chat(`> TPS: ${bot.getTps()} | Ping: ${bot.player.ping}ms | Players: ${res.players.online} / ${res.players.max} [${stringGen(4)}]`)
         });
     });
-    bot.addChatPattern('coords', /^!(coords)/, { parse: true });
-    bot.on('chat:coords', (msg) => {
+    bot.on('chat:coords', (user, msg) => {
         bot.chat(`> Toạ độ đang đứng: X: ${bot.entity.position.x} Y: ${bot.entity.position.y} Z: ${bot.entity.position.z} [${stringGen(4)}]`)
+    });
+    bot.on('chat:botinfo', (msg) => {
+        bot.chat(`Ping: ${bot.player.ping}ms | `)
     });
 
     setInterval(() => {
         const msgs = [
-            'Tham gia server discord của PW ngay tại: https://dsc,gg/phoenixwarriors',
             'Anh có tất cả, nhưng thiếu em...',
             'Sách là nguồn tri thức dồi dào, nhưng ở đây thì khác',
             'Điều đáng sợ nhất đối với mỗi người là mỗi ngày thức dậy. Và nhận ra trong cuộc sống mình không có người và điều gì để chờ đợi, cố gắng.',
@@ -118,13 +124,17 @@ async function createBot(client) {
             'Đừng bao giờ hối tiếc những điều xảy ra trong quá khứ, vì thời điểm ấy, đó chính xác là những gì bạn muốn.'
         ];
         const randNum = Math.floor(Math.random() * msgs.length);
-        bot.chat(`> ${msgs[randNum]} [${stringGen(4)}]`);
-    }, ms('1m'))
+        bot.chat(`${msgs[randNum]} ${stringGen(6)}`);
+    }, ms('10m'));
+
+    setInterval(() => {
+        bot.chat('Tham gia server discord của PW ngay tại: https://dsc,gg/phoenixwarriors')
+    }, ms('1m'));
 
     bot.on('end', (reason) => {
         const embed = new Discord.MessageEmbed()
             .setColor('RED')
-            .setDescription(`${emojis.danger} Bot đã mất kết nối đến server ${process.env.IP}, kết nối lại sau 5 phút`);
+            .setDescription(`${emojis.danger} Bot đã mất kết nối đến server ${process.env.IP} vì lỗi ${reason}, kết nối lại sau 5 phút`);
         sendEmbed(bot, client, embed);
         console.log(`[Mineflayer] Bot mất kết nối tới server ${process.env.IP}, đang kết nối lại...`);
         setTimeout(() => {
@@ -133,7 +143,7 @@ async function createBot(client) {
                 .setDescription(`Đang kết nối lại server \`${process.env.IP}\`...`);
             sendEmbed(bot, client, embed);
             createBot(client);
-        }, ms('5m'))
+        }, ms('5m'));
     });
 }
 
@@ -188,7 +198,7 @@ async function sendEmbed(bot, client, embed) {
  */
 function stringGen(yourNumber){
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible = "0123456789";
   
     for (var i = 0; i < yourNumber; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));

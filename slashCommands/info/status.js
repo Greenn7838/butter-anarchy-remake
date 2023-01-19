@@ -1,4 +1,5 @@
 const util = require('minecraft-server-util');
+const { getQueue } = require('../../utils/getQueue')
 const { Client, CommandInteraction, MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     run: async(client, interaction) => {
+        let queue = await getQueue();
         util.status('anarchyvn.net').then((res) => {
             const embed = new MessageEmbed()
                 .setColor('GREEN')
@@ -27,10 +29,15 @@ module.exports = {
                         inline: true
                     },
                     {
+                        name: 'Hàng chờ',
+                        value: `${queue.toString()}`,
+                        inline: true
+                    },
+                    {
                         name: 'MOTD',
                         value: res.motd.clean,
                         inline: false
-                    }
+                    },
                 )
                 .setThumbnail(`https://eu.mc-api.net/v3/server/favicon/anarchyvn.net`);
             interaction.reply({ embeds: [embed] })
