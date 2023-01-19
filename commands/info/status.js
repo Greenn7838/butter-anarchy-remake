@@ -19,7 +19,7 @@ module.exports = {
         const table = new asciitable();
         mcUtil.status('anarchyvn.net', 25565)
             .then(res => {
-                table.addRow(`IP server: ${args[0].toLowerCase()}`)
+                table.addRow(`IP server: anarchyvn.net`)
                     .addRow(`Version: ${res.version.name}`)
                     .addRow(`👥 Players: ${res.players.online} / ${res.players.max}`)
                     .addRow(`MOTD: ${res.motd.clean}`);
