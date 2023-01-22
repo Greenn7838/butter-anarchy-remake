@@ -166,6 +166,8 @@ const donatorprefix = '<[Donator]';
  */
 async function embedColor(embed, msg) {
     let str = ``;
+    msg.replace('https://dsc/ ,gg', 'https://dsc.gg');
+    msg.replace('https://discord/ gg', 'https://discord.gg')
     if (msg.startsWith(deathprefix)) {
         // death event
         str = `${emojis.death} ${msg}`;
@@ -177,6 +179,7 @@ async function embedColor(embed, msg) {
         str = `${msg}`;
         embed.setColor(colors.blue).setDescription(str);
     };
+    
 }
 
 /**
