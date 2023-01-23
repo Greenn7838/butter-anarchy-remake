@@ -166,8 +166,18 @@ const donatorprefix = '<[Donator]';
  */
 async function embedColor(embed, msg) {
     let str = ``;
-    msg.replace('https://dsc/ ,gg', 'https://dsc.gg');
-    msg.replace('https://discord/ gg', 'https://discord.gg')
+    let linkRegex1 = /(https:\/\/)dsc\/ gg\/.+/g;
+    let linkRegex2 = /(https:\/\/dsc\/,gg\/.+)/g;
+    let linkRegex3 = /(https:\/\/discord\/ gg\/.+)/g;
+
+    if (linkRegex1.test(msg) == true) {
+        msg.replace(linkRegex1, /(https:\/\/dsc.gg\/.+)/g)
+    } else if (linkRegex2.test(msg) == true) {
+        msg.replace(linkRegex2, /(https:\/\/dsc.gg\/.+)/g)
+    } else if (linkRegex3.test(msg) == true) {
+        msg.replace(linkRegex3, /(https:\/\/discord.gg\/.+)/g)
+    }
+
     if (msg.startsWith(deathprefix)) {
         // death event
         str = `${emojis.death} ${msg}`;
