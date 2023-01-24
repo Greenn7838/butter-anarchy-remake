@@ -200,10 +200,8 @@ async function embedColor(embed, msg) {
  */
 async function sendEmbed(bot, client, embed) {
     const channel = await client.channels.cache.get(process.env.DISCORD_LIVECHAT);
-    const channel2 = await client.channels.cache.get('1067337892336255066');
     if (!channel) return;
     await channel.send({ embeds: [embed] });
-    await channel2.send({ embeds: [embed] });
 }
 
 /**
