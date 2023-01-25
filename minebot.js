@@ -65,9 +65,27 @@ async function createBot(client) {
         bot.clickWindow(p4, 0, 0);
     
         // Cho bot vào server
-        setTimeout(() => { bot.chat('/anarchyvn'); sendEmbed(bot, client, new Discord.MessageEmbed().setColor('GREEN').setDescription('Đã nhập `/anarchyvn`')) }, 5*1000); // Dùng /2y2c sau khi login xong
-    
-        setTimeout(() => { bot.clickWindow(13,0,0); sendEmbed(bot, client, new Discord.MessageEmbed().setColor('YELLOW').setDescription(`Đã click ${emojis.crystal} \`End Crystal\``)) }, 10*1000); // Sau đó bấm vào khung kia để vào server
+        setTimeout(() => {
+            bot.chat('/anarchyvn'); // Nhập "/anarchyvn"
+            sendEmbed(
+                bot,
+                client,
+                new Discord.MessageEmbed()
+                    .setColor('YELLOW')
+                    .setTitle('Đã nhập `/anarchyvn`')
+            );
+        }, ms('15s'));
+        setTimeout(() => {
+            bot.clickWindow(13, 0, 0).then(() => {
+                sendEmbed(
+                    bot,
+                    client,
+                    new Discord.MessageEmbed()
+                        .setColor('GREEN')
+                        .setTitle(`${emojis.crystal} Đã bấm \`Chuyển server\``)
+                );
+            });
+        }, ms('20s'));
     });
     
 
