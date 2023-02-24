@@ -124,7 +124,6 @@ async function createBot(client) {
         bot.chat(`Ping: ${bot.player.ping}ms | `)
     });
 
-<<<<<<< HEAD
     // setInterval(() => {
     //     const msgs = [
     //         'Anh có tất cả, nhưng thiếu em...',
@@ -153,11 +152,6 @@ async function createBot(client) {
     setInterval(() => {
         bot.chat(`Can you join my server, its IP can be found at here discord .gg/JwzfPGxM [${Math.random()}]`)
     }, ms('45s'));
-=======
-    setInterval(() => {
-        bot.chat('https://discord.gg/XeaFb9DUuM ' + Math.floor(Math.random()*32767))
-    }, ms('20s'));
->>>>>>> 2b92c2ed6e638c1925737a991369168881b9df6f
 
     bot.on('end', (reason) => {
         const embed = new Discord.MessageEmbed()
